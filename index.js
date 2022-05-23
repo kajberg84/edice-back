@@ -1,23 +1,20 @@
-const express = require("express");
-const app = express();
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import { connectToDB } from './src/mongoose/mongoose.js';
+import dotenv from 'dotenv';
 
 //developement env vars
-require("dotenv").config();
+dotenv.config();
+const PORT = process.env.PORT || 8080;
+
+const app = express();
 
 //middleware
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(
-  process.env.MONGODB_URI,
-  { useNewUrlParser: true, useUnifiedTopology: true, autoIndex: true },
-  () => console.log("Connected to the database successfully")
-);
-
-const PORT = process.env.PORT || 8080;
+connectToDB();
 
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
