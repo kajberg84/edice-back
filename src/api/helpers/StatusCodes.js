@@ -12,7 +12,7 @@ const METHOD_NOT_ALLOWED = 405;
 // 500 anrop
 const INTERNAL_SERVER_ERROR = 500;
 
-module.exports = {
+export default {
   OK,
   CREATED,
   BAD_REQUEST,
