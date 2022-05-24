@@ -1,6 +1,6 @@
-import { hashPassword } from "../../middleware/authentication.js";
-import User from "../../models/User.model.js";
-import StatusCodes from "../../helpers/StatusCodes.js";
+import { hashPassword } from '../../middleware/authentication.js';
+import User from '../../models/User.model.js';
+import StatusCodes from '../../helpers/StatusCodes.js';
 
 // Getting users
 const getAll = async (req, res) => {
@@ -9,7 +9,7 @@ const getAll = async (req, res) => {
   if (!users) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json("An error occured while getting user");
+      .json('An error occured while getting user');
   }
 };
 
@@ -20,7 +20,7 @@ const getUser = async (req, res) => {
   if (!users) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json("An error occured while getting orders");
+      .json('An error occured while getting orders');
   }
 };
 
@@ -38,9 +38,13 @@ const addUser = async (req, res) => {
   });
   try {
     await newUser.save();
-    res.status(StatusCodes.CREATED).json("User was created");
+    res.status(StatusCodes.CREATED).json('User was created');
   } catch (error) {
-    res.status(StatusCodes.BAD_REQUEST).json("An error ocurred");
+    res.status(StatusCodes.BAD_REQUEST).json({
+      message: 'An error ocurred',
+      error: error.message,
+      stackTrace: process.env.ENVIRONMENT === 'DEVELOPMENT' && error.stack,
+    });
   }
 };
 
@@ -63,9 +67,9 @@ const updateUser = async (req, res) => {
       },
       { new: true }
     );
-    res.status(StatusCodes.CREATED).json("User was updated successfully");
+    res.status(StatusCodes.CREATED).json('User was updated successfully');
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("An error ocurred");
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json('An error ocurred');
   }
 };
 
@@ -75,8 +79,8 @@ const deleteUser = async (req, res) => {
     if (err)
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json("User could not be deleted due to server error");
-    res.status(StatusCodes.CREATED).json("User was deleted successfully");
+        .json('User could not be deleted due to server error');
+    res.status(StatusCodes.CREATED).json('User was deleted successfully');
   });
 };
 
