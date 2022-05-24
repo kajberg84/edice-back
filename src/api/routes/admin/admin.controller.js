@@ -3,7 +3,7 @@ import Admin from "../../models/Admin.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
 // Getting admins
-const getAllAdmins = async (req, res) => {
+const getAll = async (req, res) => {
   const admins = await Admin.find({});
   res.status(StatusCodes.OK).json(admins);
   if (!admins) {
@@ -62,4 +62,4 @@ const deleteAdmin = async (req, res) => {
   });
 };
 
-export { getAllAdmins, getAdmin, addAdmin, updateAdmin, deleteAdmin };
+export { getAll, getAdmin, addAdmin, updateAdmin, deleteAdmin };

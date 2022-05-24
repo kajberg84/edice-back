@@ -10,7 +10,7 @@ import {
 
 export const adminRouter = express.Router();
 
-adminRouter.get("/", getAllAdmins);
+adminRouter.get("/", getAll);
 
 adminRouter.get("/:id", getAdmin);
 

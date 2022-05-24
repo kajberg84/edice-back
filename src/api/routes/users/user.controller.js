@@ -3,7 +3,7 @@ import User from "../../models/User.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
 // Getting users
-const getAllUsers = async (req, res) => {
+const getAll = async (req, res) => {
   const users = await User.find({});
   res.status(StatusCodes.OK).json(users);
   if (!users) {
@@ -70,4 +70,4 @@ const deleteUser = async (req, res) => {
   });
 };
 
-export { getAllUsers, getUser, addUser, updateUser, deleteUser };
+export { getAll, getUser, addUser, updateUser, deleteUser };

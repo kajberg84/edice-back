@@ -3,7 +3,7 @@ import Order from "../../models/Order.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
 // Getting orders
-const getAllOrders = async (req, res) => {
+const getAll = async (req, res) => {
   const orders = await Order.find({});
   res.status(StatusCodes.OK).json(orders);
   if (!orders) {
@@ -94,4 +94,4 @@ const deleteOrder = async (req, res) => {
   });
 };
 
-export { getAllOrders, getOrder, addOrder, updateOrder, deleteOrder };
+export { getAll, getOrder, addOrder, updateOrder, deleteOrder };
