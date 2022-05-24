@@ -3,6 +3,7 @@ import User from "../../models/User.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
 const loginUser = async (req, res) => {
+  console.log(req);
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   const checkUserPassword = await checkPassword(password, user.password);

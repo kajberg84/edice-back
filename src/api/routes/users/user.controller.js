@@ -3,13 +3,24 @@ import User from "../../models/User.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
 // Getting users
-const getUser = async (req, res) => {
+const getAll = async (req, res) => {
   const users = await User.find({});
   res.status(StatusCodes.OK).json(users);
   if (!users) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json("An error occured while getting user");
+  }
+};
+
+// Getting user by id
+const getUser = async (req, res) => {
+  const users = await User.findById(req.params.id);
+  res.status(StatusCodes.OK).json(users);
+  if (!users) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json("An error occured while getting orders");
   }
 };
 
@@ -59,4 +70,4 @@ const deleteUser = async (req, res) => {
   });
 };
 
-export { getUser, addUser, updateUser, deleteUser };
+export { getAll, getUser, addUser, updateUser, deleteUser };

@@ -3,10 +3,21 @@ import Admin from "../../models/Admin.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
 // Getting admins
-const getAdmin = async (req, res) => {
+const getAll = async (req, res) => {
   const admins = await Admin.find({});
   res.status(StatusCodes.OK).json(admins);
   if (!admins) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json("An error occured while getting Admins");
+  }
+};
+
+// Getting admin by id
+const getAdmin = async (req, res) => {
+  const admin = await Admin.findById(req.params.id);
+  res.status(StatusCodes.OK).json(admin);
+  if (!admin) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json("An error occured while getting Admins");
@@ -51,4 +62,4 @@ const deleteAdmin = async (req, res) => {
   });
 };
 
-export { getAdmin, addAdmin, updateAdmin, deleteAdmin };
+export { getAll, getAdmin, addAdmin, updateAdmin, deleteAdmin };

@@ -2,6 +2,7 @@
 import express from "express";
 import {
   getOrder,
+  getAll,
   addOrder,
   updateOrder,
   deleteOrder,
@@ -9,7 +10,9 @@ import {
 
 export const orderRouter = express.Router();
 
-orderRouter.get("/", getOrder);
+orderRouter.get("/", getAll);
+
+orderRouter.get("/:id", getOrder);
 
 orderRouter.post("/", addOrder);
 
