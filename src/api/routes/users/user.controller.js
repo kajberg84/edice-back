@@ -2,19 +2,25 @@ import { hashPassword } from "../../middleware/authentication.js";
 import User from "../../models/User.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
-// User controller
-const getUser = (req, res) => {
-  //Get user code
-  console.log("get user");
+// Getting users
+const getUser = async (req, res) => {
+  const users = await User.find({});
+  res.status(StatusCodes.OK).json(users);
+  if (!users) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json("An error occured while getting user");
+  }
 };
 
+// Adding a user
 const addUser = async (req, res) => {
-  console.log("We are in the user creation", req.body);
-  const { name, address, city, phone, email, password } = req.body;
+  const { name, address, city, zipcode, phone, email, password } = req.body;
   const newUser = new User({
     name,
     address,
     city,
+    zipcode,
     phone,
     email,
     password: hashPassword(password),
@@ -27,4 +33,30 @@ const addUser = async (req, res) => {
   }
 };
 
-export { getUser, addUser };
+// update a user
+const updateUser = async (req, res) => {
+  const { name, address, city, zipcode, phone, email, password } = req.body;
+  User.findByIdAndUpdate(req.params.id, {
+    name,
+    address,
+    city,
+    zipcode,
+    phone,
+    email,
+    password,
+  });
+  res.status(StatusCodes.CREATED).json("User was updated successfully");
+};
+
+// Delete a user
+const deleteUser = async (req, res) => {
+  User.findByIdAndDelete(req.params.id, (err) => {
+    if (err)
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json("User could not be deleted due to server error");
+    res.status(StatusCodes.CREATED).json("User was deleted successfully");
+  });
+};
+
+export { getUser, addUser, updateUser, deleteUser };

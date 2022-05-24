@@ -1,8 +1,9 @@
 import express from "express";
+import { loginUser } from "./login.controller.js";
 
 export const loginRouter = express.Router();
 
-userRouter.post("/", loginUser);
+loginRouter.post("/", loginUser);
 
 //create login controller
 //create function loginUser.

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const UserSchema = mongoose.Schema({
   name: {
@@ -11,6 +11,10 @@ const UserSchema = mongoose.Schema({
   },
   city: {
     type: String,
+    required: true,
+  },
+  zipcode: {
+    type: Number,
     required: true,
   },
   phone: {
@@ -27,4 +31,4 @@ const UserSchema = mongoose.Schema({
   },
 });
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model("User", UserSchema);
