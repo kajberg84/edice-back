@@ -11,9 +11,9 @@ import { getAuth, hashPassword } from "../../middleware/authentication.js";
 
 export const userRouter = express.Router();
 
-userRouter.get("/", getAuth, getUser);
+userRouter.get("/:id", getAuth, getUser);
 
-userRouter.get("/:id", getAll);
+userRouter.get("/", getAll);
 
 userRouter.post("/", addUser);
 

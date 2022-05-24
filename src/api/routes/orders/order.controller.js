@@ -69,17 +69,21 @@ const updateOrder = async (req, res) => {
     zipcode,
     status,
   } = req.body;
-  Order.findByIdAndUpdate(req.params.id, {
-    products,
-    total,
-    name,
-    email,
-    phone,
-    address,
-    city,
-    zipcode,
-    status,
-  });
+  Order.findByIdAndUpdate(
+    req.params.id,
+    {
+      products,
+      total,
+      name,
+      email,
+      phone,
+      address,
+      city,
+      zipcode,
+      status,
+    },
+    { new: true }
+  );
   res.status(StatusCodes.CREATED).json("Order was updated successfully");
 };
 

@@ -46,17 +46,27 @@ const addUser = async (req, res) => {
 
 // update a user
 const updateUser = async (req, res) => {
-  const { name, address, city, zipcode, phone, email, password } = req.body;
-  User.findByIdAndUpdate(req.params.id, {
-    name,
-    address,
-    city,
-    zipcode,
-    phone,
-    email,
-    password,
-  });
-  res.status(StatusCodes.CREATED).json("User was updated successfully");
+  const { name, address, city, zipcode, phone, email, password } =
+    await req.body;
+  console.log(req.body);
+  try {
+    User.findByIdAndUpdate(
+      req.params.id,
+      {
+        name,
+        address,
+        city,
+        zipcode,
+        phone,
+        email,
+        password: hashPassword(password),
+      },
+      { new: true }
+    );
+    res.status(StatusCodes.CREATED).json("User was updated successfully");
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
 };
 
 // Delete a user
