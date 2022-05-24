@@ -1,4 +1,4 @@
-// user routes
+// products routes
 import express from 'express';
 import ProductController from './product.controller.js';
 
