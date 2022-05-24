@@ -30,7 +30,8 @@
     "nodemailer": "^6.7.5",
     "passport": "^0.5.3",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "dotenv": "^16.0.1",

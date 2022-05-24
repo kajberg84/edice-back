@@ -43,11 +43,15 @@ const addAdmin = async (req, res) => {
 // Update an admin
 const updateAdmin = async (req, res) => {
   const { name, email, password } = req.body;
-  Admin.findByIdAndUpdate(req.params.id, {
-    name,
-    email,
-    password,
-  });
+  Admin.findByIdAndUpdate(
+    req.params.id,
+    {
+      name,
+      email,
+      password,
+    },
+    { new: true }
+  );
   res.status(StatusCodes.CREATED).json("Admin was updated successfully");
 };
 

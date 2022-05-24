@@ -1,7 +1,7 @@
 //Admin routes
 import express from "express";
 import {
-  getAllAdmins,
+  getAll,
   getAdmin,
   addAdmin,
   updateAdmin,
