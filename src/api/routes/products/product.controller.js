@@ -2,7 +2,7 @@
 import ProductModel from '../../models/Product.model.js';
 import StatusCodes from '../../helpers/StatusCodes.js';
 
-// Kod tillagd från min inl2, denna behöver nog göras om lite. Men de olika funktionerna täcker nog alla våra olika behov för controllers.
+// Kod tillagd från min inl2, denna behöver nog göras om lite. Men de olika funktionerna täcker nog alla våra olika behov för att hantera produkterna.
 
 const getAllProducts = async (req, res) => {
   try {
@@ -62,7 +62,7 @@ const getProductWithId = async (req, res) => {
     });
   }
 };
-const getProductWithSlug = async (req, res, next) => {
+const getProductWithSlug = async (req, res) => {
   try {
     const response = await ProductModel.find({ slug: req.query.slug });
     res.status(200).send(response);
@@ -74,7 +74,6 @@ const getProductWithSlug = async (req, res, next) => {
   } catch (error) {
     error.status = 404;
     error.message = 'No Products to show från slug controllern';
-    next(error);
   }
 };
 
