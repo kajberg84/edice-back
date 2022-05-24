@@ -1,5 +1,5 @@
 import { checkPassword } from "../../middleware/authentication.js";
-import User from "../../models/User.js";
+import User from "../../models/User.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
 const loginUser = async (req, res) => {

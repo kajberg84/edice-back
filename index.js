@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { connectToDB } from "./src/mongoose/mongoose.js";
 import dotenv from "dotenv";
+import { connectToDB } from "./src/mongoose/mongoose.js";
 import { router } from "./src/api/routes/router.js";
 
 //developement env vars

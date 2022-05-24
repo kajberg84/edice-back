@@ -1,5 +1,5 @@
 // order controller
-import Order from "../../models/Order.js";
+import Order from "../../models/Order.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
 // Getting orders

@@ -1,5 +1,5 @@
 //Admin controller
-import Admin from "../../models/Admin.js";
+import Admin from "../../models/Admin.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
 // Getting admins
