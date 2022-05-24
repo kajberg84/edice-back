@@ -36,7 +36,7 @@ const addAdmin = async (req, res) => {
     await newAdmin.save();
     res.status(StatusCodes.CREATED).json("Admin was created");
   } catch (error) {
-    res.status(StatusCodes.BAD_REQUEST);
+    res.status(StatusCodes.BAD_REQUEST).json("An error ocurred");
   }
 };
 

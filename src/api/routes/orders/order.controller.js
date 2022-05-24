@@ -52,7 +52,7 @@ const addOrder = async (req, res) => {
     await newOrder.save();
     res.status(StatusCodes.CREATED).json("Order was created");
   } catch (error) {
-    res.status(StatusCodes.BAD_REQUEST);
+    res.status(StatusCodes.BAD_REQUEST).json("An error ocurred");
   }
 };
 

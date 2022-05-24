@@ -40,7 +40,7 @@ const addUser = async (req, res) => {
     await newUser.save();
     res.status(StatusCodes.CREATED).json("User was created");
   } catch (error) {
-    res.status(StatusCodes.BAD_REQUEST);
+    res.status(StatusCodes.BAD_REQUEST).json("An error ocurred");
   }
 };
 
@@ -65,7 +65,7 @@ const updateUser = async (req, res) => {
     );
     res.status(StatusCodes.CREATED).json("User was updated successfully");
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("An error ocurred");
   }
 };
 
