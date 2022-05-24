@@ -10,19 +10,10 @@ import createError from "http-errors";
 export const router = express.Router();
 
 router.use("/user", userRouter);
-router.use("/products", productRouter);
-router.use("/orders", orderRouter);
+router.use("/product", productRouter);
+router.use("/order", orderRouter);
 router.use("/admin", adminRouter);
+router.use("/login", loginRouter);
 
 // Catch 404 as last route
 router.use("*", (req, res, next) => next(createError(StatusCodes.NOT_FOUND)));
-
-router.use("/login", loginRouter);
-
-router.use("/admin", adminRouter);
-
-router.use("/order", orderRouter);
-
-router.use("/product", productRouter);
-
-//skapa en /logout

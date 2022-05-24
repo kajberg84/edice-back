@@ -3,10 +3,21 @@ import Order from "../../models/Order.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
 // Getting orders
-const getOrder = async (req, res) => {
+const getAllOrders = async (req, res) => {
   const orders = await Order.find({});
   res.status(StatusCodes.OK).json(orders);
   if (!orders) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json("An error occured while getting orders");
+  }
+};
+
+// Getting order by id
+const getOrder = async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  res.status(StatusCodes.OK).json(order);
+  if (!order) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json("An error occured while getting orders");
@@ -83,4 +94,4 @@ const deleteOrder = async (req, res) => {
   });
 };
 
-export { getOrder, addOrder, updateOrder, deleteOrder };
+export { getAllOrders, getOrder, addOrder, updateOrder, deleteOrder };

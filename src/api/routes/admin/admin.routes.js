@@ -1,6 +1,7 @@
 //Admin routes
 import express from "express";
 import {
+  getAllAdmins,
   getAdmin,
   addAdmin,
   updateAdmin,
@@ -9,7 +10,9 @@ import {
 
 export const adminRouter = express.Router();
 
-adminRouter.get("/", getAdmin);
+adminRouter.get("/", getAllAdmins);
+
+adminRouter.get("/:id", getAdmin);
 
 adminRouter.post("/", addAdmin);
 
