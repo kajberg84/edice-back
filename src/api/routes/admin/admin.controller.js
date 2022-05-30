@@ -3,6 +3,9 @@ import Admin from "../../models/Admin.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 import { hashPassword } from "../../middleware/authentication.js";
 
+// helpers
+import { ErrorMessageHelper } from '../../helpers/ErrorMessageHelper.js';
+
 // Getting admins
 const getAll = async (req, res) => {
   const admins = await Admin.find({});
@@ -10,7 +13,7 @@ const getAll = async (req, res) => {
   if (!admins) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json("An error occured while getting Admins");
+      .json('An error occured while getting Admins');
   }
 };
 
@@ -21,7 +24,7 @@ const getAdmin = async (req, res) => {
   if (!admin) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json("An error occured while getting Admins");
+      .json('An error occured while getting Admins');
   }
 };
 
@@ -35,9 +38,9 @@ const addAdmin = async (req, res) => {
   });
   try {
     await newAdmin.save();
-    res.status(StatusCodes.CREATED).json("Admin was created");
+    res.status(StatusCodes.CREATED).json('Admin was created');
   } catch (error) {
-    res.status(StatusCodes.BAD_REQUEST).json("An error ocurred");
+    res.status(StatusCodes.BAD_REQUEST).json('An error ocurred');
   }
 };
 
@@ -67,8 +70,8 @@ const deleteAdmin = async (req, res) => {
     if (err)
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json("Admin could not be deleted due to server error");
-    res.status(StatusCodes.CREATED).json("Admin was deleted successfully");
+        .json('Admin could not be deleted due to server error');
+    res.status(StatusCodes.CREATED).json('Admin was deleted successfully');
   });
 };
 
