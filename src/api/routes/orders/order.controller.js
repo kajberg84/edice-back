@@ -68,23 +68,28 @@ const updateOrder = async (req, res) => {
     city,
     zipcode,
     status,
-  } = req.body;
-  Order.findByIdAndUpdate(
-    req.params.id,
-    {
-      products,
-      total,
-      name,
-      email,
-      phone,
-      address,
-      city,
-      zipcode,
-      status,
-    },
-    { new: true }
-  );
-  res.status(StatusCodes.CREATED).json("Order was updated successfully");
+  } = await req.body;
+  console.log(req.body);
+  try {
+    Order.findByIdAndUpdate(
+      req.params.id,
+      {
+        products,
+        total,
+        name,
+        email,
+        phone,
+        address,
+        city,
+        zipcode,
+        status,
+      },
+      { new: true }
+    );
+    res.status(StatusCodes.CREATED).json("Order was updated successfully");
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("An error ocurred");
+  }
 };
 
 // Delete an order
