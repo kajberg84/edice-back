@@ -1,6 +1,7 @@
-// imports
-import Admin from '../../models/Admin.model.js';
-import StatusCodes from '../../helpers/StatusCodes.js';
+//Admin controller
+import Admin from "../../models/Admin.model.js";
+import StatusCodes from "../../helpers/StatusCodes.js";
+import { hashPassword } from "../../middleware/authentication.js";
 
 // helpers
 import { ErrorMessageHelper } from '../../helpers/ErrorMessageHelper.js';
@@ -33,7 +34,7 @@ const addAdmin = async (req, res) => {
   const newAdmin = new Admin({
     name,
     email,
-    password,
+    password: hashPassword(password),
   });
   try {
     await newAdmin.save();
@@ -45,17 +46,22 @@ const addAdmin = async (req, res) => {
 
 // Update an admin
 const updateAdmin = async (req, res) => {
-  const { name, email, password } = req.body;
-  Admin.findByIdAndUpdate(
-    req.params.id,
-    {
-      name,
-      email,
-      password,
-    },
-    { new: true }
-  );
-  res.status(StatusCodes.CREATED).json('Admin was updated successfully');
+  const { name, email, password } = await req.body;
+  console.log(req.body);
+  try {
+    Admin.findByIdAndUpdate(
+      req.params.id,
+      {
+        name,
+        email,
+        password: hashPassword(password),
+      },
+      { new: true }
+    );
+    res.status(StatusCodes.CREATED).json("Admin was updated successfully");
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("An error ocurred");
+  }
 };
 
 // Delete an admin
