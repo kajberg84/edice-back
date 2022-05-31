@@ -74,10 +74,10 @@ const updateOrder = async (req, res) => {
     city,
     zipcode,
     status,
-  } = await req.body;
+  } = req.body;
   console.log(req.body);
   try {
-    Order.findByIdAndUpdate(
+    const response = await Order.findByIdAndUpdate(
       req.params.id,
       {
         products,
@@ -92,7 +92,7 @@ const updateOrder = async (req, res) => {
       },
       { new: true }
     );
-    res.status(StatusCodes.CREATED).json("Order was updated successfully");
+    res.status(StatusCodes.OK).json("Order was updated successfully");
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
