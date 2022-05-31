@@ -4,7 +4,7 @@ import StatusCodes from "../../helpers/StatusCodes.js";
 import { hashPassword } from "../../middleware/authentication.js";
 
 // helpers
-import { ErrorMessageHelper } from '../../helpers/ErrorMessageHelper.js';
+import { ErrorMessageHelper } from "../../helpers/ErrorMessageHelper.js";
 
 // Getting admins
 const getAll = async (req, res) => {
@@ -13,7 +13,7 @@ const getAll = async (req, res) => {
   if (!admins) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json('An error occured while getting Admins');
+      .json(ErrorMessageHelper(error));
   }
 };
 
@@ -24,7 +24,7 @@ const getAdmin = async (req, res) => {
   if (!admin) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json('An error occured while getting Admins');
+      .json(ErrorMessageHelper(error));
   }
 };
 
@@ -38,9 +38,9 @@ const addAdmin = async (req, res) => {
   });
   try {
     await newAdmin.save();
-    res.status(StatusCodes.CREATED).json('Admin was created');
+    res.status(StatusCodes.CREATED).json("Admin was created");
   } catch (error) {
-    res.status(StatusCodes.BAD_REQUEST).json('An error ocurred');
+    res.status(StatusCodes.BAD_REQUEST).json(ErrorMessageHelper(error));
   }
 };
 
@@ -60,18 +60,20 @@ const updateAdmin = async (req, res) => {
     );
     res.status(StatusCodes.CREATED).json("Admin was updated successfully");
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("An error ocurred");
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(ErrorMessageHelper(error));
   }
 };
 
 // Delete an admin
 const deleteAdmin = async (req, res) => {
-  Admin.findByIdAndDelete(req.params.id, (err) => {
-    if (err)
+  Admin.findByIdAndDelete(req.params.id, (error) => {
+    if (error)
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json('Admin could not be deleted due to server error');
-    res.status(StatusCodes.CREATED).json('Admin was deleted successfully');
+        .json(ErrorMessageHelper(error));
+    res.status(StatusCodes.CREATED).json("Admin was deleted successfully");
   });
 };
 
