@@ -1,9 +1,11 @@
 // imports
+
 import Order from "../../models/Order.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
 
 // helpers
-import { ErrorMessageHelper } from '../../helpers/ErrorMessageHelper.js';
+import { ErrorMessageHelper } from "../../helpers/ErrorMessageHelper.js";
+import orderMail from "../../services/emailservice.js";
 
 // Getting orders
 const getAll = async (req, res) => {
@@ -12,7 +14,7 @@ const getAll = async (req, res) => {
   if (!orders) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json("An error occured while getting orders");
+      .json(ErrorMessageHelper(error));
   }
 };
 
@@ -23,7 +25,7 @@ const getOrder = async (req, res) => {
   if (!order) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json("An error occured while getting orders");
+      .json(ErrorMessageHelper(error));
   }
 };
 
@@ -54,8 +56,9 @@ const addOrder = async (req, res) => {
   try {
     await newOrder.save();
     res.status(StatusCodes.CREATED).json("Order was created");
+    //orderMail(req.body);
   } catch (error) {
-    res.status(StatusCodes.BAD_REQUEST).json("An error ocurred");
+    res.status(StatusCodes.BAD_REQUEST).json(ErrorMessageHelper(error));
   }
 };
 
@@ -91,17 +94,19 @@ const updateOrder = async (req, res) => {
     );
     res.status(StatusCodes.CREATED).json("Order was updated successfully");
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("An error ocurred");
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(ErrorMessageHelper(error));
   }
 };
 
 // Delete an order
 const deleteOrder = async (req, res) => {
-  Order.findByIdAndDelete(req.params.id, (err) => {
-    if (err)
+  Order.findByIdAndDelete(req.params.id, (error) => {
+    if (error)
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json("Order could not be deleted due to server error");
+        .json(ErrorMessageHelper(error));
     res.status(StatusCodes.CREATED).json("Order was deleted successfully");
   });
 };
