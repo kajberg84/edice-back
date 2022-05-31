@@ -1,12 +1,13 @@
-import nodemailer from "nodemailer";
-import StatusCodes from "../helpers/StatusCodes.js";
+import nodemailer from 'nodemailer';
+import StatusCodes from '../helpers/StatusCodes.js';
 
 //Fungerar ej
 const orderMail = async (req, res) => {
-  const { name, email } = req.body;
+  console.log(req);
+  const { name, email } = req;
 
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
@@ -18,19 +19,17 @@ const orderMail = async (req, res) => {
   try {
     const emailRes = await transporter.sendMail({
       from: email,
-      to: "quizzie_89@hotmail.com",
+      to: 'quizzie_89@hotmail.com',
       subject: `Nytt meddelande från ${email}`,
       html: `<p>Du har ett nytt meddelande från kontaktformuläret</p><br>
 <p><strong>Namn: </strong> ${name} </p><br>
  `,
     });
 
-    console.log("Message Sent");
+    console.log('Message Sent');
   } catch (err) {
     console.log(err);
   }
-
-  res.status(StatusCodes.OK).json(req.body);
 };
 
 export default orderMail;
