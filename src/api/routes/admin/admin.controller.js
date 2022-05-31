@@ -49,7 +49,7 @@ const updateAdmin = async (req, res) => {
   const { name, email, password } = await req.body;
   console.log(req.body);
   try {
-    Admin.findByIdAndUpdate(
+    const response = await Admin.findByIdAndUpdate(
       req.params.id,
       {
         name,
