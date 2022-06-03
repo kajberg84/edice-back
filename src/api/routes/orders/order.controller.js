@@ -92,7 +92,9 @@ const updateOrder = async (req, res) => {
       },
       { new: true }
     );
-    res.status(StatusCodes.OK).json("Order was updated successfully");
+    res
+      .status(StatusCodes.OK)
+      .json({ msg: "Order was updated successfully", response });
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
