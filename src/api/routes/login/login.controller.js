@@ -49,6 +49,7 @@ const loginAdmin = async (req, res) => {
     adminId: admin._id,
     name: admin.name,
     email: admin.email,
+    admin: true,
   };
 
   const secret = process.env.JWT_SECRET;

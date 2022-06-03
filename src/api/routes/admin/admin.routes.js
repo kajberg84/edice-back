@@ -7,15 +7,19 @@ import {
   updateAdmin,
   deleteAdmin,
 } from "./admin.controller.js";
+import {
+  authenticateAdmin,
+  authenticateJWT,
+} from "../../middleware/authentication.js";
 
 export const adminRouter = express.Router();
 
-adminRouter.get("/", getAll);
+adminRouter.get("/", authenticateJWT, authenticateAdmin, getAll);
 
-adminRouter.get("/:id", getAdmin);
+adminRouter.get("/:id", authenticateJWT, authenticateAdmin, getAdmin);
 
-adminRouter.post("/", addAdmin);
+adminRouter.post("/", authenticateJWT, authenticateAdmin, addAdmin);
 
-adminRouter.put("/:id", updateAdmin);
+adminRouter.put("/:id", authenticateJWT, authenticateAdmin, updateAdmin);
 
-adminRouter.delete("/:id", deleteAdmin);
+adminRouter.delete("/:id", authenticateJWT, authenticateAdmin, deleteAdmin);
