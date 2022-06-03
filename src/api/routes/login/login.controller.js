@@ -2,6 +2,7 @@ import { checkPassword } from "../../middleware/authentication.js";
 import User from "../../models/User.model.js";
 import Admin from "../../models/Admin.model.js";
 import StatusCodes from "../../helpers/StatusCodes.js";
+import jwt from "jsonwebtoken";
 
 const loginUser = async (req, res) => {
   console.log(req);
@@ -12,13 +13,26 @@ const loginUser = async (req, res) => {
   if (!user || !checkUserPassword) {
     res.status(StatusCodes.BAD_REQUEST).json("Wrong email or password.");
   }
-  res.status(StatusCodes.OK).json({
+
+  const payload = {
+    userId: user._id,
     name: user.name,
     address: user.address,
     city: user.city,
     zipcode: user.zipcode,
     phone: user.phone,
     email: user.email,
+  };
+
+  const secret = process.env.JWT_SECRET;
+  const signOptions = {
+    expiresIn: 60 * 60 * 24,
+  };
+
+  const accessToken = jwt.sign(payload, secret, signOptions);
+
+  res.status(StatusCodes.OK).json({
+    access_token: accessToken,
   });
 };
 
@@ -31,9 +45,21 @@ const loginAdmin = async (req, res) => {
   if (!admin || !checkAdminPassword) {
     res.status(StatusCodes.BAD_REQUEST).json("Wrong email or password.");
   }
-  res.status(StatusCodes.OK).json({
+  const payload = {
+    adminId: admin._id,
     name: admin.name,
-    address: admin.address,
+    email: admin.email,
+  };
+
+  const secret = process.env.JWT_SECRET;
+  const signOptions = {
+    expiresIn: 60 * 60 * 24,
+  };
+
+  const accessToken = jwt.sign(payload, secret, signOptions);
+
+  res.status(StatusCodes.OK).json({
+    access_token: accessToken,
   });
 };
 
