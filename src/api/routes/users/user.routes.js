@@ -7,16 +7,20 @@ import {
   updateUser,
   deleteUser,
 } from "./user.controller.js";
-import { getAuth, hashPassword } from "../../middleware/authentication.js";
+import {
+  authenticateAdmin,
+  authenticateJWT,
+  hashPassword,
+} from "../../middleware/authentication.js";
 
 export const userRouter = express.Router();
 
-userRouter.get("/:id", getAuth, getUser);
+userRouter.get("/:id", authenticateJWT, getUser);
 
-userRouter.get("/", getAll);
+userRouter.get("/", authenticateJWT, authenticateAdmin, getAll);
 
 userRouter.post("/", addUser);
 
-userRouter.put("/:id", updateUser);
+userRouter.put("/:id", authenticateJWT, updateUser);
 
-userRouter.delete("/:id", deleteUser);
+userRouter.delete("/:id", authenticateJWT, deleteUser);
