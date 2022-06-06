@@ -1,3 +1,3 @@
-import dotenv from 'dotenv';
+//import dotenv from 'dotenv';
 
-// eventuellt skippa denna, beror på hur på 
+// eventuellt skippa denna, beror på hur på
