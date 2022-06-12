@@ -5,10 +5,7 @@ import StatusCodes from '../../helpers/StatusCodes.js';
 // helpers
 import { ErrorMessageHelper } from '../../helpers/ErrorMessageHelper.js';
 
-// === file comments ===
-// Kod tillagd från min inl2, denna behöver nog göras om lite. Men de olika funktionerna täcker nog alla våra olika behov för att hantera produkterna.
-
-const getAllProducts = async (req, res) => {
+const getAllProducts = async (req, res, next) => {
   try {
     const response = await ProductModel.find();
     res.status(StatusCodes.OK).send(response);
@@ -16,10 +13,11 @@ const getAllProducts = async (req, res) => {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .send(ErrorMessageHelper(error));
+    next();
   }
 };
 
-const addProduct = async (req, res) => {
+const addProduct = async (req, res, next) => {
   const {
     title,
     description,
@@ -50,10 +48,11 @@ const addProduct = async (req, res) => {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .send(ErrorMessageHelper(error));
+    next();
   }
 };
 
-const getProductWithId = async (req, res) => {
+const getProductWithId = async (req, res, next) => {
   try {
     const response = await ProductModel.findById(req.params.id);
     res.status(StatusCodes.OK).send(response);
@@ -67,9 +66,10 @@ const getProductWithId = async (req, res) => {
             req.params.id
         )
       );
+    next();
   }
 };
-const getProductWithSlug = async (req, res) => {
+const getProductWithSlug = async (req, res, next) => {
   try {
     const response = await ProductModel.find({ slug: req.query.slug });
     response.length > 0
@@ -81,10 +81,11 @@ const getProductWithSlug = async (req, res) => {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .send(ErrorMessageHelper(error));
+    next();
   }
 };
 
-const updateProduct = async (req, res) => {
+const updateProduct = async (req, res, next) => {
   const {
     title,
     description,
@@ -119,14 +120,20 @@ const updateProduct = async (req, res) => {
     );
     res.status(StatusCodes.OK).send(response);
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(ErrorMessageHelper(
-      error,
-      'Error occured while trying to update Product with id:' + req.params.id
-    ));
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send(
+        ErrorMessageHelper(
+          error,
+          'Error occured while trying to update Product with id:' +
+            req.params.id
+        )
+      );
+    next();
   }
 };
 
-const deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res, next) => {
   try {
     const response = await ProductModel.findByIdAndDelete(req.params.id);
     res.status(StatusCodes.OK).send({
@@ -142,6 +149,7 @@ const deleteProduct = async (req, res) => {
             req.params.id
         )
       );
+    next();
   }
 };
 
