@@ -1,8 +1,8 @@
-import { checkPassword } from "../../middleware/authentication.js";
-import User from "../../models/User.model.js";
-import Admin from "../../models/Admin.model.js";
-import StatusCodes from "../../helpers/StatusCodes.js";
-import jwt from "jsonwebtoken";
+import { checkPassword } from '../../middleware/authentication.js';
+import User from '../../models/User.model.js';
+import Admin from '../../models/Admin.model.js';
+import StatusCodes from '../../helpers/StatusCodes.js';
+import jwt from 'jsonwebtoken';
 
 const loginUser = async (req, res) => {
   console.log(req);
@@ -11,7 +11,7 @@ const loginUser = async (req, res) => {
   const checkUserPassword = await checkPassword(password, user.password);
 
   if (!user || !checkUserPassword) {
-    res.status(StatusCodes.BAD_REQUEST).json("Wrong email or password.");
+    res.status(StatusCodes.BAD_REQUEST).json('Wrong email or password.');
   }
 
   const payload = {
@@ -43,7 +43,7 @@ const loginAdmin = async (req, res) => {
   const checkAdminPassword = await checkPassword(password, admin.password);
 
   if (!admin || !checkAdminPassword) {
-    res.status(StatusCodes.BAD_REQUEST).json("Wrong email or password.");
+    res.status(StatusCodes.BAD_REQUEST).json('Wrong email or password.');
   }
   const payload = {
     adminId: admin._id,
@@ -61,6 +61,7 @@ const loginAdmin = async (req, res) => {
 
   res.status(StatusCodes.OK).json({
     access_token: accessToken,
+    user: payload,
   });
 };
 
