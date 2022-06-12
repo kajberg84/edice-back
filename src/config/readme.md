@@ -1,1 +1,0 @@
-Bryta ut delar från index.js och lägga här:
