@@ -34,6 +34,7 @@ const loginUser = async (req, res, next) => {
 
     res.status(StatusCodes.OK).json({
       access_token: accessToken,
+      user: payload,
     });
   } catch {
     console.log('error i login');
