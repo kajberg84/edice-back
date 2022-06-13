@@ -64,6 +64,7 @@ const addUser = async (req, res, next) => {
 };
 
 // update a user
+// avaktiverade möjligheten att uppdatera lösenordet då det inte är nödvändigt för oss.
 const updateUser = async (req, res, next) => {
   const { name, address, city, zipcode, phone, email, password } =
     await req.body;
@@ -78,7 +79,7 @@ const updateUser = async (req, res, next) => {
         zipcode,
         phone,
         email,
-        password: hashPassword(password),
+        // password: hashPassword(password),
       },
       { new: true }
     );
