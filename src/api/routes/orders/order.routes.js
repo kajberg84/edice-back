@@ -16,7 +16,7 @@ export const orderRouter = express.Router();
 
 orderRouter.get("/", authenticateJWT, getAll);
 
-orderRouter.get("/:id", authenticateJWT, getOrder);
+orderRouter.get("/:id", getOrder);
 
 orderRouter.post("/", addOrder);
 
