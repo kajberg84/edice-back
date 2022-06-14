@@ -49,7 +49,7 @@ const getOrdersWithEmail = async (req, res, next) => {
     response.length > 0
       ? res.status(200).send(response)
       : res.status(404).send({
-          message: 'Could not find a product with slug: ' + req.query.email,
+          message: 'Could not find a order with email: ' + req.query.email,
         });
   } catch (error) {
     res
