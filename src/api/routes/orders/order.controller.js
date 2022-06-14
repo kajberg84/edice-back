@@ -1,11 +1,11 @@
 // imports
 
-import Order from '../../models/Order.model.js';
-import StatusCodes from '../../helpers/StatusCodes.js';
+import Order from "../../models/Order.model.js";
+import StatusCodes from "../../helpers/StatusCodes.js";
 
 // helpers
-import { ErrorMessageHelper } from '../../helpers/ErrorMessageHelper.js';
-import orderMail from '../../services/emailservice.js';
+import { ErrorMessageHelper } from "../../helpers/ErrorMessageHelper.js";
+import orderMail from "../../services/emailservice.js";
 
 // Getting orders
 const getAll = async (req, res, next) => {
@@ -68,8 +68,8 @@ const addOrder = async (req, res, next) => {
     status,
   });
   try {
-    await newOrder.save();
-    res.status(StatusCodes.CREATED).json('Order was created');
+    const response = await newOrder.save();
+    res.status(StatusCodes.CREATED).send(response);
     //orderMail(req.body);
   } catch (error) {
     res.status(StatusCodes.BAD_REQUEST).json(ErrorMessageHelper(error));
@@ -109,7 +109,7 @@ const updateOrder = async (req, res, next) => {
     );
     res
       .status(StatusCodes.OK)
-      .json({ msg: 'Order was updated successfully', response });
+      .json({ msg: "Order was updated successfully", response });
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -126,7 +126,7 @@ const deleteOrder = async (req, res, next) => {
         res
           .status(StatusCodes.INTERNAL_SERVER_ERROR)
           .json(ErrorMessageHelper(error));
-      res.status(StatusCodes.CREATED).json('Order was deleted successfully');
+      res.status(StatusCodes.CREATED).json("Order was deleted successfully");
     });
   } catch (error) {
     res
