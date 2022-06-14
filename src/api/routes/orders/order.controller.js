@@ -1,11 +1,11 @@
 // imports
 
-import Order from "../../models/Order.model.js";
-import StatusCodes from "../../helpers/StatusCodes.js";
+import Order from '../../models/Order.model.js';
+import StatusCodes from '../../helpers/StatusCodes.js';
 
 // helpers
-import { ErrorMessageHelper } from "../../helpers/ErrorMessageHelper.js";
-import orderMail from "../../services/emailservice.js";
+import { ErrorMessageHelper } from '../../helpers/ErrorMessageHelper.js';
+import orderMail from '../../services/emailservice.js';
 
 // Getting orders
 const getAll = async (req, res, next) => {
@@ -39,6 +39,22 @@ const getOrder = async (req, res, next) => {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json(ErrorMessageHelper(error));
+    next();
+  }
+};
+// Getting order by id
+const getOrdersWithEmail = async (req, res, next) => {
+  try {
+    const response = await Order.find({ email: req.query.email });
+    response.length > 0
+      ? res.status(200).send(response)
+      : res.status(404).send({
+          message: 'Could not find a order with email: ' + req.query.email,
+        });
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send(ErrorMessageHelper(error));
     next();
   }
 };
@@ -109,7 +125,7 @@ const updateOrder = async (req, res, next) => {
     );
     res
       .status(StatusCodes.OK)
-      .json({ msg: "Order was updated successfully", response });
+      .json({ msg: 'Order was updated successfully', response });
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -126,7 +142,7 @@ const deleteOrder = async (req, res, next) => {
         res
           .status(StatusCodes.INTERNAL_SERVER_ERROR)
           .json(ErrorMessageHelper(error));
-      res.status(StatusCodes.CREATED).json("Order was deleted successfully");
+      res.status(StatusCodes.CREATED).json('Order was deleted successfully');
     });
   } catch (error) {
     res
@@ -136,4 +152,11 @@ const deleteOrder = async (req, res, next) => {
   }
 };
 
-export { getAll, getOrder, addOrder, updateOrder, deleteOrder };
+export {
+  getAll,
+  getOrder,
+  getOrdersWithEmail,
+  addOrder,
+  updateOrder,
+  deleteOrder,
+};
