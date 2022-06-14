@@ -16,7 +16,7 @@ import {
 export const orderRouter = express.Router();
 
 orderRouter.get('/', authenticateJWT, getAll);
-orderRouter.get('/email', getOrdersWithEmail);
+orderRouter.get('/email', authenticateJWT, getOrdersWithEmail);
 
 orderRouter.get('/:id', getOrder);
 
