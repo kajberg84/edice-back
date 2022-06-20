@@ -5,7 +5,7 @@ import StatusCodes from '../../helpers/StatusCodes.js';
 
 // helpers
 import { ErrorMessageHelper } from '../../helpers/ErrorMessageHelper.js';
-import orderMail from '../../services/emailservice.js';
+import { orderConfirmed, orderError } from '../../services/emailservice.js';
 
 // Getting orders
 const getAll = async (req, res, next) => {
@@ -86,9 +86,10 @@ const addOrder = async (req, res, next) => {
   try {
     const response = await newOrder.save();
     res.status(StatusCodes.CREATED).send(response);
-    //orderMail(req.body);
+    orderConfirmed(req.body);
   } catch (error) {
     res.status(StatusCodes.BAD_REQUEST).json(ErrorMessageHelper(error));
+    orderError(req.body);
     next();
   }
 };
