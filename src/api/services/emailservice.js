@@ -1,10 +1,19 @@
-import nodemailer from 'nodemailer';
-import StatusCodes from '../helpers/StatusCodes.js';
 import sgMail from '@sendgrid/mail';
 
-const orderConfirmed = (orderInfo) => {
+const sendMail = (msg) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log('Email sent');
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+const orderConfirmed = (orderInfo) => {
   const msg = {
     to: `${orderInfo.email}`,
     from: process.env.SENDGRID_SENDER,
@@ -18,19 +27,10 @@ const orderConfirmed = (orderInfo) => {
     <p>Your order stsatus is: ${orderInfo.status}</p>`,
   };
 
-  sgMail
-    .send(msg)
-    .then(() => {
-      console.log('Email sent');
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  sendMail(msg);
 };
 
 const orderError = (orderInfo) => {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
   const msg = {
     to: `${orderInfo.email}`,
     from: process.env.SENDGRID_SENDER,
@@ -40,14 +40,7 @@ const orderError = (orderInfo) => {
     <p>Your order has not been confirmed, try to create a new order!</p>`,
   };
 
-  sgMail
-    .send(msg)
-    .then(() => {
-      console.log('Email sent');
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  sendMail(msg);
 };
 
 export { orderConfirmed, orderError };
