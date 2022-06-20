@@ -24,7 +24,7 @@ const orderConfirmed = (orderInfo) => {
     <p>Your order will be shipped to the following address: ${orderInfo.address}</p>
     <p>Your order will be shipped to the following city: ${orderInfo.city}</p>
     <p>Your order will be shipped to the following zipcode: ${orderInfo.zipcode}</p>
-    <p>Your order stsatus is: ${orderInfo.status}</p>`,
+    <p>Your order status is: ${orderInfo.status}</p>`,
   };
 
   sendMail(msg);
